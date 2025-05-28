@@ -1,0 +1,16 @@
+
+library(maptools)
+library(sp)
+library(sf)
+SCpoly<-st_read("SC_county_alphasort.shp")
+SCpoly2<-as_Spatial(SCpoly)
+SCcon<-data.frame(BYM2M)
+#graphics....using data.frame and SCpoly
+library(tmap)
+areaID<-as.character(seq(1:46))
+attr<-data.frame(SCcon,row.names=areaID)
+spg<-SpatialPolygonsDataFrame(SCpoly2, attr, match.ID = TRUE)
+labels<-c("Corr","UCorr","theta")
+qtm(spg,fill=c("Corr","UCorr","theta"),fill.palette="Blues")+
+    tm_layout(title="",panel.labels=labels,legend.position=c("LEFT","BOTTOM"),legend.height=0.4)
+####################spplot###############################################
